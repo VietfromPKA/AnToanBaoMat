@@ -1,0 +1,78 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f3f4f6;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 360px;
+    text-align: center;
+    max-width: 100%;
+}
+
+h3 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+input,
+select,
+button,
+a {
+    margin-top: 15px;
+    width: calc(100% - 24px);
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+button,
+a {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover,
+a:hover {
+    background-color: #357ABD;
+}
+
+a {
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    margin-top: 20px;
+    /* Thay đổi khoảng cách giữa các nút */
+}
+
+p {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+span#result {
+    font-weight: bold;
+    color: #4a90e2;
+    word-wrap: break-word;
+}
