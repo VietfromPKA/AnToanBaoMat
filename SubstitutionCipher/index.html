@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caesar Cipher</title>
+    <title>Transposition Cipher</title>
     <link rel="stylesheet" href="../css/styles.css">
-    
 </head>
 <body>
     <div class="container">
-        <h3>Caesar Cipher</h3>
+        <h3>Transposition Cipher</h3>
         <input type="text" id="inputText" placeholder="Nhập chuỗi ký tự">
         <input type="file" id="fileInput" accept=".txt">
+        <input type="number" id="key" placeholder="Nhập khóa chuyển vị (số nguyên)">
         
-        <input type="number" id="shift" placeholder="Nhập số bước dịch chuyển" min="1">
-
         <select id="action">
             <option value="encrypt">Mã hóa</option>
             <option value="decrypt">Giải mã</option>
@@ -25,6 +23,7 @@
 
         <p>Kết quả: <span id="result"></span></p>
     </div>
+    
 </body>
 <script src="./js/main.js"></script>
 </html>
