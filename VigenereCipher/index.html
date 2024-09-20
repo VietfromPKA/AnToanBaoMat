@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigenère Cipher</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h3>Vigenère Cipher</h3>
+        <input type="text" id="inputText" placeholder="Nhập chuỗi ký tự">
+        <input type="file" id="fileInput" accept=".txt">
+        <input type="text" id="key" placeholder="Nhập khóa (chỉ ký tự chữ cái)">
+
+        <select id="action">
+            <option value="encrypt">Mã hóa</option>
+            <option value="decrypt">Giải mã</option>
+        </select>
+
+        <button onclick="process()">Thực hiện</button>
+        <a id="downloadButton" class="download-button" download="result.txt">Tải xuống</a>
+
+        <p>Kết quả: <span id="result"></span></p>
+    </div>
+</body>
+<script src="./js/main.js"></script>
+
+</html>
