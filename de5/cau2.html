@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm Tra Tính Toàn Vẹn Tệp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 50px;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        label, input, button, textarea {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+        input, button, textarea {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        textarea {
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Kiểm Tra Tính Toàn Vẹn Tệp</h2>
+
+<div class="container">
+    <form id="fileForm">
+        <label for="fileInput">Chọn tệp X:</label>
+        <input type="file" id="fileInput" required>
+        
+        <button type="submit">Kiểm Tra và Mã Hóa</button>
+    </form>
+
+    <h3>Kết Quả:</h3>
+    <textarea id="result" rows="10" cols="50" readonly></textarea>
+</div>
+
+<script>
+// Hàm tính giá trị băm MD5 giả định
+function md5(string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+        hash = (hash << 5) - hash + string.charCodeAt(i);
+        hash |= 0; // chuyển đổi sang số 32-bit
+    }
+    return hash.toString(16);
+}
+
+// Hàm mã hóa đơn giản cho các ký tự Unicode
+function simpleEncrypt(data, key) {
+    let encrypted = '';
+    for (let i = 0; i < data.length; i++) {
+        encrypted += String.fromCharCode(data.charCodeAt(i) + key.length);
+    }
+    // Sử dụng encodeURIComponent để xử lý ký tự Unicode
+    return btoa(encodeURIComponent(encrypted));
+}
+
+document.getElementById('fileForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const fileData = e.target.result;
+
+            // Bước 1: Tính giá trị băm MD5
+            const md5Hash = md5(fileData);
+
+            // Bước 2: Thêm Y (giá trị băm) vào cuối tệp
+            const newData = fileData + md5Hash;
+
+            // Bước 3: Mã hóa bằng phương pháp đơn giản
+            const encryptedData = simpleEncrypt(newData, "key1234");
+
+            // Bước 4: Hiển thị kết quả
+            document.getElementById('result').value = 
+                `Giá trị băm MD5 giả định: ${md5Hash}\n\nDữ liệu đã mã hóa:\n${encryptedData}`;
+        };
+
+        reader.readAsText(file);
+    }
+});
+</script>
+
+</body>
+</html>

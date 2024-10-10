@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thám mã Vigenère Cipher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #results {
+            width: 100%;
+            max-width: 600px;
+        }
+        h3 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h2>Thám mã Vigenère Cipher</h2>
+    <form id="decryptForm">
+        <label for="ciphertext">Nhập văn bản mã hóa:</label>
+        <input type="text" id="ciphertext" name="ciphertext" value="tyltsrekyreytflex" required>
+        <button type="submit">Thám mã</button>
+    </form>
+    <div id="results">
+        <h3>Các kết quả thám mã có thể:</h3>
+        <ul id="decryptionResults"></ul>
+    </div>
+
+    <script>
+        function giaiMaVigenere(ciphertext, key) {
+            const keyLength = key.length;
+            let decrypted = '';
+
+            for (let i = 0, j = 0; i < ciphertext.length; i++) {
+                const kyTu = ciphertext[i];
+                if (kyTu.match(/[a-z]/i)) {
+                    const ma = kyTu.charCodeAt(0);
+                    const coSo = (ma >= 65 && ma <= 90) ? 65 : 97;
+                    const keyChar = key[j % keyLength].toLowerCase();
+                    const keyShift = keyChar.charCodeAt(0) - 97; // Lấy mã ASCII
+                    decrypted += String.fromCharCode(((ma - coSo - keyShift + 26) % 26) + coSo);
+                    j++; // Chỉ tăng j nếu ký tự là chữ cái
+                } else {
+                    decrypted += kyTu;
+                }
+            }
+            return decrypted;
+        }
+
+        const keysToTry = ['abc', 'key', 'cipher', 'secret']; // Bạn có thể thêm nhiều khóa vào đây
+
+        document.getElementById('decryptForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const ciphertext = document.getElementById('ciphertext').value;
+            const decryptionResults = document.getElementById('decryptionResults');
+            decryptionResults.innerHTML = '';
+
+            keysToTry.forEach(key => {
+                const plaintext = giaiMaVigenere(ciphertext, key);
+                const listItem = document.createElement('li');
+                listItem.textContent = `Khóa "${key}": ${plaintext}`;
+                decryptionResults.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>

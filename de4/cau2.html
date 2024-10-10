@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mã hóa AES</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #downloadLink {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #007BFF;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mã hóa AES</h2>
+        <label for="message">Thông điệp:</label>
+        <input type="text" id="message" placeholder="Nhập thông điệp" value="IlovePhenikaa">
+
+        <label for="password">Mật khẩu:</label>
+        <input type="password" id="password" placeholder="Nhập mật khẩu">
+
+        <button id="encryptBtn">Mã hóa</button>
+
+        <h3>Kết quả mã hóa:</h3>
+        <textarea id="result" rows="4" readonly></textarea>
+
+        <a id="downloadLink" download="aes-encrypt.dat" style="display:none;">Tải xuống file</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        document.getElementById('encryptBtn').addEventListener('click', function() {
+            // Lấy thông điệp và mật khẩu từ input
+            const message = document.getElementById('message').value;
+            const password = document.getElementById('password').value;
+
+            if (message && password) {
+                // Mã hóa thông điệp bằng AES với mật khẩu
+                const encrypted = CryptoJS.AES.encrypt(message, password).toString();
+
+                // Hiển thị kết quả mã hóa
+                document.getElementById('result').value = encrypted;
+
+                // Tạo nội dung file .dat để tải về
+                const blob = new Blob([encrypted], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+
+                // Cập nhật liên kết tải file
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = url;
+                downloadLink.style.display = 'block';
+            } else {
+                alert('Vui lòng nhập đầy đủ thông điệp và mật khẩu!');
+            }
+        });
+    </script>
+</body>
+</html>
