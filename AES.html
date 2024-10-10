@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Encryption</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mã hóa AES</h1>
+    <input type="password" id="password" placeholder="Nhập mật khẩu" />
+    <input type="text" id="textToEncrypt" placeholder="Nhập văn bản để mã hóa" />
+    <button id="encryptButton">Mã hóa</button>
+    <a id="downloadLink" style="display:none;">Tải xuống bản mã</a>
+
+    <script>
+        document.getElementById('encryptButton').addEventListener('click', function() {
+            const password = document.getElementById('password').value;
+            const textToEncrypt = document.getElementById('textToEncrypt').value;
+
+            // Tạo khóa từ mật khẩu
+            const key = CryptoJS.enc.Utf8.parse(password);
+
+            // Mã hóa văn bản
+            const encrypted = CryptoJS.AES.encrypt(textToEncrypt, key, {
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            // Lưu bản mã vào tệp
+            const blob = new Blob([encrypted.toString()], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = url;
+            downloadLink.download = 'aes-encrypt.dat';
+            downloadLink.innerText = 'Tải xuống bản mã';
+            downloadLink.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
